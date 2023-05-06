@@ -1,131 +1,86 @@
-import React from "react";
+import React, {useState} from "react";
+
 import "../App.css";
 
-const RecepieCard = () => {
-  return (
-    <>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+const RecepieCard = ({e,deleteRecepie,editRecepie}) => {
+  const [recepie_Id,setId]=useState("")
+  const [details,setDetails]=useState(false)
+  const [recepie_Name,setName]=useState(e.recepie_Name)
+  const [Cook_Time,setCook_Time]=useState(e.Cook_Time)
+  const [Prep_Time,setPrepTime]=useState(e.Prep_Time)
+  const [recepie_Image,setImage]=useState(e.recepie_Image)
+  const [recepie_Ingredients,setIngredients]=useState(e.recepie_Ingredients)
+  const [recepie_Description,setDescription]=useState(e.recepie_Description)
+  const [Serves,setServes]=useState(e.Serves)
+  const [categorie,setCategorie]=useState(e.categorie)
+  const [users_user_Id,setUserId]=useState(1)
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Pizza</h1>
-            <i> 25 Mins</i> <br />
-            <i>Serves: 5</i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+  const recepie={
+    recepie_Name:recepie_Name, Cook_Time:Cook_Time, Prep_Time:Prep_Time, recepie_Image:recepie_Image, recepie_Ingredients:recepie_Ingredients, recepie_Description:recepie_Description, Serves:Serves,
+    categorie:categorie,users_user_Id:users_user_Id
+  }
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGFzdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-           
-          </div>
-          <div className="text">
-            <h1 className="food">Pasta</h1>
-            <i> 30 Mins</i> <br />
-            <i>4 Serves </i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+ 
+  const handleUpdate=(recepie_Id)=>{
+    console.log(e.recepie_Id)
+    editRecepie(e.recepie_Id, recepie)
+    setDetails(false)
+  }
+  const handleDelete=(recepie_Id)=>{
+    console.log(recepie_Id, "params")
+    console.log(e.recepie_Id, "hhhh")
+    deleteRecepie(e.recepie_Id)
+  }
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1618449840665-9ed506d73a34?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y3VycnklMjBjaGlja2VufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alter=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Curry chicken</h1>
-            <i> 45 Mins</i> <br />
-            <i>4 Serves </i>
-          </div>
-        </>
+  return(
+    <div className="add-recipe-form ">
+      <button onClick={()=>setDetails(!details)}  >Editing</button>
+      {details ?
+      <div>
+      <div className="form-group">
+        <label>Name:</label>
+        <input type="text" placeholder="Name" value={recepie_Name} onChange={(e)=>setName(e.target.value)}  />
       </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+      <div className="form-group">
+        <label>Cook Time:</label>
+        <input type="number" placeholder="Cooking Time" onChange={(e)=>setCook_Time(e.target.value)} value={Cook_Time}  />
+      </div>
+      <div className="form-group">
+        <label>Prep Time:</label>
+        <input type="number" placeholder="Preparation Time" value={Prep_Time} onChange={(e)=>setPrepTime(e.target.value)}  />
+      </div>
+      <div className="form-group">
+        <label>Serves:</label>
+        <input type="number" placeholder="serves" value={Serves} onChange={(e)=>setServes(e.target.value)}  />
+      </div>
+      <div className="form-group">
+        <label>Category:</label>
+        <input type="text" placeholder="Category" value={categorie} onChange={(e)=>setCategorie(e.target.value)}  />
+      </div>
+      <div className="form-group">
+        <label>Description:</label>
+        <input type="text" placeholder="Description" value={recepie_Description} onChange={(e)=>setDescription(e.target.value)}  />
+      </div>
+      <div className="form-group">
+        <label>Ingredients:</label>
+        <input placeholder="Ingredients" value={recepie_Ingredients} onChange={(e)=>setIngredients(e.target.value)}  />
+      </div>
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1512058556646-c4da40fba323?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c3RpciUyMGZyeXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Stir-Fry</h1>
-            <i> 40 Mins</i> <br />
-            <i>3 Serves </i>
-          </div>
-        </>
+      <div className="form-group">
+        <label>Image:</label>
+        <input type="text" placeholder="Image URL" value={recepie_Image}  onChange={(e)=>setImage(e.target.value)}  />
       </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
-
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hc3RlZCUyMGNoaWNrZW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-            <div className="icon">
-              <a href="/">
-                <i />
-              </a>
-            </div>
-          </div>
-          <div className="text">
-            <h1 className="food">Roasted Chicken</h1>
-            <i> 425 Mins</i> <br />
-            <i>6 Serves </i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
-
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1548869206-93b036288d7e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YmVlZiUyMHN0aXIlMjBmcnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Beef Stir Fry</h1>
-            <i> 40 Mins</i> <br />
-            <i>2 Serves </i>
-          </div>
-        </>
-      </div>
-    </>
-  );
-};
+      <div>
+      <button className="create-recipe-btn"  onClick={()=>{handleUpdate(e.recepie_Id)}} >Update Recepie</button>
+    </div>   
+    <div>
+      <button className="create-recipe-btn"  onClick={()=>{handleDelete(e.recepie_Id)}} >Delete Recepie</button>
+    </div>  
+    </div> 
+    :<div></div>}
+    
+    </div>
+  )
+  }
 
 export default RecepieCard;

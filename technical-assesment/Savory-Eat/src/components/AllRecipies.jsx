@@ -1,11 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
+import Onerecepie from "./OneRecipie.jsx"
 import "../index.scss";
-const AllRecepies = () => {
+const AllRecepies = ({data}) => {
+  
   return (
     <div className="card-container">
     
       <div className="card">
-        <button className="delete">delete</button>
+        {data.map((e,i)=>{
+          return (
+            <div key={i}>
+              <Onerecepie e={e}/>
+            </div>
+          )
+        })}
+        {/* <button className="delete">delete</button>
         <button className="update">update </button>
 
         <>
@@ -118,7 +128,7 @@ const AllRecepies = () => {
             <i> 40 Mins</i> <br />
             <i>Serves : 2 </i>
           </div>
-        </>
+        </> */}
       </div>
   
     </div>

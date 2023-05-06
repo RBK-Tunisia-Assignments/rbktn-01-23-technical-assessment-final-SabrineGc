@@ -1,22 +1,44 @@
 import React from "react";
+import axios from "axios"
 import "../App.css"
 import "../index.scss";
+import RecepieCard from "./RecepieCard.jsx"
 
-const Onerecepie = ({ one }) => {
+const Onerecepie = ({e}) => {
+  const editRecepie=(recepie_Id,recepie)=>{
+    axios.put(`http://localhost:4000/api/recipies/${recepie_Id}`,recepie)
+    .then((res)=>{
+      console.log(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+  const deleteRecepie=(recepie_Id)=>{
+    axios.delete(`http://localhost:4000/api/recipies/${recepie_Id}`)
+    .then((res)=>{
+      console.log(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
   return (
     <div>
       <div className="receipe-content-area">
         <div className="container">
           <div className="header">
-            <img className="img" src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" />
+            <img className="img" src={e.recepie_Image} alt="" />
          
           </div>
           <div className="text">
-            <h1 className="food">Pizza</h1>
-            <i > 25 Mins</i>
-            <i > Serves: 5 </i>
+            <h1 className="food">{e.recepie_Name}</h1>
+            <i > {e.Cook_Time}</i>
+            <i > {e.Serves} </i>
 
-            <p className="info">Cheesy pizza is a classic pizza topped with a generous amount of melted cheese. The cheese used can vary from mozzarella to cheddar, provolone, or any other type of cheese that melts well.</p>
+            <p className="info">{e.recepie_Description}</p>
+            <RecepieCard e={e} editRecepie={editRecepie} deleteRecepie={deleteRecepie} />
           </div>
         </div>
       </div>

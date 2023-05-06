@@ -1,13 +1,43 @@
 //the default user to update and delete is {user_Id:1,username:'testuser',email:'test@test.com',password:'password}
-import React ,{useState}from "react";
+import React ,{useState, useEffect}from "react";
 import "./App.css";
+import axios from "axios";
 import Home from "./components/Home.jsx";
 import AllRecepies from "./components/AllRecipies.jsx"
+import Add from "./components/Add.jsx"
 function App() {
 const [view,setView]=useState('Home')
+const [recepie_Name,setName]=useState("")
+const [data,setData]=useState([])
+  const fetchData=()=>{
+    axios.get("http://localhost:4000/api/recipies/getAll")
+    .then((res)=>{
+      setData(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+      })
+  }
+  useEffect(()=>{
+    fetchData()
+  },[])
   let changeView = (view) => {
     setView(view);
   };
+  const search=(recepie_Name)=>{
+    axios.get(`http://localhost:4000/api/recipies/search/${recepie_Name}`)
+    .then((res)=>{
+      setData(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+   
+  function handleSearch(){
+    search(recepie_Name)
+  }
+
   return (
     <div className="App">
       <nav className="nav">
@@ -34,13 +64,14 @@ const [view,setView]=useState('Home')
           Addrecepie
         </div>
         <div className="nav-item" active-color="red">
-          <input type="text"  />
-          <button>search</button>
+          <input type="text" onChange={(e)=>setName(e.target.value)} />
+          <button onClick={()=>handleSearch()} >search</button>
         </div>
         <span className="nav-indicator"></span>
       </nav>
       {view === "Home" && <Home changeView={changeView}/>}
-      {view === "Allrecepies" && <AllRecepies />}
+      {view === "Allrecepies" && <AllRecepies data={data} />}
+      {view === "Addrecepie" && <Add />}
      
       <div></div>
     </div>
